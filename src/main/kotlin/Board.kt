@@ -124,7 +124,26 @@ class Board{
         return returnValue
     }
 
-    fun scanTwoSameSquares(){
-        
+    fun scanTwoSameSquares(): MutableList<String>{
+        val list = mutableListOf<String>()
+
+        return list
+    }
+
+    private fun coordinateConverter(row: Int, column: Int):String{
+        val letter =
+        when(column){
+            0 -> "C"
+            1 -> "B"
+            2 -> "A"
+            else ->""
+        }
+        return letter + (3 - row)
+    }
+
+    fun scanEmptySquares(): MutableList<String>{
+        val list = mutableListOf<String>()
+
+        return list
     }
 }
