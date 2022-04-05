@@ -130,18 +130,39 @@ class Board {
     fun scanTwoSameSquares(): MutableList<String> {
         val list = mutableListOf<String>()
         var spaceCount = 0
+        var spaceCountOutside = 0
         var temporaryCoordinateStore = ""
         val otherTwoSquares = mutableListOf<String>()
+        var temporaryCoordinateStoreOutside = ""
+        val otherTwoSquaresOutside = mutableListOf<String>()
         if (scanBoardForTheWinner() == "") {
             //For the row
             for (i in (0..2)) {
-                //For the column
+                //For the column ------------------------------------------------------------
                 for (j in (0..2)) {
                     if (getArrayValues(i, j) == "   ") {
                         spaceCount++
                         temporaryCoordinateStore = coordinateConverter(i, j)
                     } else {
                         otherTwoSquares.add(getArrayValues(i, j))
+                    }
+                }
+                if (spaceCount == 1) {
+                    if (otherTwoSquares[0] == otherTwoSquares[1]) {
+                        list.add(temporaryCoordinateStore)
+                    }
+                }
+                spaceCount = 0
+                temporaryCoordinateStore = ""
+                otherTwoSquares.clear()
+                //column code ended ----------------------------------------------------------
+                //for the row ----------------------------------------------------------------
+                for (j in (0..2)) {
+                    if (getArrayValues(j, i) == "   ") {
+                        spaceCount++
+                        temporaryCoordinateStore = coordinateConverter(j, i)
+                    } else {
+                        otherTwoSquares.add(getArrayValues(j, i))
                     }
                 }
                 if (spaceCount == 1) {
@@ -153,25 +174,43 @@ class Board {
                 spaceCount = 0
                 temporaryCoordinateStore = ""
                 otherTwoSquares.clear()
-                //for the row
-                for (j in (0..2)) {
-                    if (getArrayValues(j, i) == "   ") {
-                        spaceCount++
-                        temporaryCoordinateStore = coordinateConverter(j, i)
-                    } else {
-                        otherTwoSquares.add(getArrayValues(j, i))
-                    }
+                //row code ended --------------------------------------------------------------
+                //for diagonal left ----------------------------------------------------------
+                if (getArrayValues(i, i) == "   "){
+                    spaceCountOutside++
+                    temporaryCoordinateStoreOutside = coordinateConverter(i, i)
+                } else {
+                    otherTwoSquaresOutside.add(getArrayValues(i, i))
                 }
-                if (spaceCount == 1) {
-                    println(otherTwoSquares[0] + " :" + otherTwoSquares[1])
-                    if (otherTwoSquares[0] == otherTwoSquares[1]) {
-                        list.add(temporaryCoordinateStore)
-                    }
-                }
-                spaceCount = 0
-                temporaryCoordinateStore = ""
-                otherTwoSquares.clear()
+
             }
+            if (spaceCountOutside == 1){
+
+                if (otherTwoSquaresOutside[0] == otherTwoSquaresOutside[1]){
+                    list.add(temporaryCoordinateStoreOutside)
+                }
+            }
+
+            spaceCountOutside = 0
+            temporaryCoordinateStoreOutside = ""
+            otherTwoSquaresOutside.clear()
+            //diagonal left code ended -------------------------------------------------------
+            //for diagonal right
+            for (i in (0..2)){
+                if (getArrayValues(i, 2-i) == "   "){
+                    spaceCountOutside++
+                    temporaryCoordinateStoreOutside = coordinateConverter(i, 2-i)
+                } else {
+                    otherTwoSquaresOutside.add(getArrayValues(i, 2-i))
+                }
+            }
+            if (spaceCountOutside == 1){
+                if (otherTwoSquaresOutside[0] == otherTwoSquaresOutside[1]){
+                    list.add(temporaryCoordinateStoreOutside)
+                }
+            }
+            otherTwoSquaresOutside.clear()
+            //diagonal right code ended -----------------------------------------------------
         }
         return list
     }
