@@ -1,7 +1,7 @@
 fun main() {
     val board = Board()
     board.draw()
-    while(true) {
+    while (true) {
         val emptySquares = board.scanEmptySquares()
         board.setSquareValue(emptySquares[(0 until emptySquares.size).random()], true)
         var j = board.scanBoardForTheWinner()

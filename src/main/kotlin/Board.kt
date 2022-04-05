@@ -4,6 +4,19 @@ var row3a654651 = mutableListOf("   ", "   ", "   ")
 
 class Board {
 
+    fun reset() {
+        var i = 0
+        while (i < 3) {
+            var j = 0
+            while (j < 3) {
+                editArrayValues(i, j, "   ")
+                j++
+            }
+            i++
+        }
+
+    }
+
     fun draw() {
         //this for loop is to get the row numbers
         for (i in (0..2)) {
@@ -53,7 +66,11 @@ class Board {
         if (columnNumberForLetter == -1 || !returnValue) {
             returnValue = false
         } else {
-            editArrayValues(rowNumber, columnNumberForLetter, mode1)
+            if (getArrayValues(rowNumber, columnNumberForLetter) == "   ") {
+                editArrayValues(rowNumber, columnNumberForLetter, mode1)
+            } else {
+                returnValue = false
+            }
         }
         return returnValue
     }
@@ -114,33 +131,46 @@ class Board {
         val list = mutableListOf<String>()
         var spaceCount = 0
         var temporaryCoordinateStore = ""
+        val otherTwoSquares = mutableListOf<String>()
         if (scanBoardForTheWinner() == "") {
             //For the row
-            for (i in (0..2)){
+            for (i in (0..2)) {
                 //For the column
-                for (j in (0..2)){
-                    if (getArrayValues(i,j) == "   "){
+                for (j in (0..2)) {
+                    if (getArrayValues(i, j) == "   ") {
                         spaceCount++
-                        temporaryCoordinateStore = coordinateConverter(i,j)
+                        temporaryCoordinateStore = coordinateConverter(i, j)
+                    } else {
+                        otherTwoSquares.add(getArrayValues(i, j))
                     }
                 }
-                if (spaceCount == 1){
-                    list.add(temporaryCoordinateStore)
+                if (spaceCount == 1) {
+                    //println(otherTwoSquares[0] + " :" + otherTwoSquares[1])
+                    if (otherTwoSquares[0] == otherTwoSquares[1]) {
+                        list.add(temporaryCoordinateStore)
+                    }
                 }
                 spaceCount = 0
                 temporaryCoordinateStore = ""
-
-                for (j in (0..2)){
-                    if (getArrayValues(j,i) == "   "){
+                otherTwoSquares.clear()
+                //for the row
+                for (j in (0..2)) {
+                    if (getArrayValues(j, i) == "   ") {
                         spaceCount++
-                        temporaryCoordinateStore = coordinateConverter(j,i)
+                        temporaryCoordinateStore = coordinateConverter(j, i)
+                    } else {
+                        otherTwoSquares.add(getArrayValues(j, i))
                     }
                 }
-                if (spaceCount == 1){
-                    list.add(temporaryCoordinateStore)
+                if (spaceCount == 1) {
+                    println(otherTwoSquares[0] + " :" + otherTwoSquares[1])
+                    if (otherTwoSquares[0] == otherTwoSquares[1]) {
+                        list.add(temporaryCoordinateStore)
+                    }
                 }
                 spaceCount = 0
                 temporaryCoordinateStore = ""
+                otherTwoSquares.clear()
             }
         }
         return list
