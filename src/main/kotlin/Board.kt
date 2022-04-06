@@ -4,6 +4,7 @@ var row3a654651 = mutableListOf("   ", "   ", "   ")
 
 class Board {
 
+    //Reset the board
     fun reset() {
         var i = 0
         while (i < 3) {
@@ -17,6 +18,7 @@ class Board {
 
     }
 
+    //Draws the board on the command line
     fun draw() {
         //this for loop is to get the row numbers
         for (i in (0..2)) {
@@ -95,6 +97,7 @@ class Board {
         return k
     }
 
+    //Scan the board for the winner and returns the symbol of the winner
     fun scanBoardForTheWinner(): String {
         var returnValue = ""
         for (i in (0..2)) {
@@ -127,6 +130,7 @@ class Board {
         return returnValue
     }
 
+    //Scan squares with two same data and returns the remaining squares as a list
     fun scanTwoSameSquares(): MutableList<String> {
         val list = mutableListOf<String>()
         var spaceCount = 0
@@ -215,6 +219,7 @@ class Board {
         return list
     }
 
+    //convert given mutable list coordinate into a board coordinate
     private fun coordinateConverter(row: Int, column: Int): String {
         val letter =
             when (column) {
@@ -226,6 +231,7 @@ class Board {
         return letter + (3 - row)
     }
 
+    //Scans the empty squares and returns a mutable list with their board coordinates
     fun scanEmptySquares(): MutableList<String> {
         val list = mutableListOf<String>()
         for (i in (0..2)) {
