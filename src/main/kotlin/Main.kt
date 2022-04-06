@@ -1,5 +1,19 @@
 fun main() {
     val board = Board()
+    while (true){
+        if (gameplaySP()){
+            board.reset()
+            println("Do you want to play again? (Y/N)")
+            val d = readLine()
+            if (d == "N" || d == "n"){
+                break
+            }
+        }
+    }
+}
+
+fun gameplaySP():Boolean{
+    val board = Board()
     board.draw()
     println("Please enter your side (Type X for X side and type O for O side): ")
     val mode: Boolean
@@ -24,6 +38,7 @@ fun main() {
             val twoEqualSquares = board.scanTwoSameSquares()
             if (board.scanEmptySquares().size == 0) {
                 println("Draw")
+
                 break
             }
             if (twoEqualSquares.size != 0) {
@@ -33,6 +48,7 @@ fun main() {
                     board.setSquareValue(emptySquares[(0 until emptySquares.size).random()], true)
                 } else {
                     println("Draw")
+                    
                     break
                 }
             }
@@ -40,10 +56,12 @@ fun main() {
             var j = board.scanBoardForTheWinner()
             if (j != "") {
                 println("$j won")
+                
                 break
             }
             if (board.scanEmptySquares().size == 0) {
                 println("Draw")
+                
                 break
             }
             println("Enter the coordinate: ")
@@ -56,11 +74,13 @@ fun main() {
             j = board.scanBoardForTheWinner()
             if (j != "") {
                 println("$j won")
+                
                 break
             }
             if (board.scanEmptySquares().size == 0) {
                 board.draw()
                 println("Draw")
+                
                 break
             }
         }
@@ -75,10 +95,12 @@ fun main() {
             var j = board.scanBoardForTheWinner()
             if (j != "") {
                 println("$j won")
+                
                 break
             }
             if (board.scanEmptySquares().size == 0) {
                 println("Draw")
+                
                 break
             }
             val emptySquares = board.scanEmptySquares()
@@ -91,6 +113,7 @@ fun main() {
                 } else {
                     board.draw()
                     println("Draw")
+                    
                     break
                 }
             }
@@ -98,12 +121,16 @@ fun main() {
             j = board.scanBoardForTheWinner()
             if (j != "") {
                 println("$j won")
+                
                 break
             }
             if (board.scanEmptySquares().size == 0) {
                 println("Draw")
+                
                 break
             }
         }
+        
     }
+    return true
 }
